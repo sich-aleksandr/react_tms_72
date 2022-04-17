@@ -2,39 +2,41 @@ import React from "react";
 import css from "./todo-list-item.module.css";
 
 export const FILTER_STATUSES = {
-  ALL: 'all',
-  COMPLEATED: 'compleated',
-  ACTIVE: 'active',
-}
-
-export const filterOptions = [
-  {id: 'all', value: FILTER_STATUSES.ALL, label: 'Все', isChecked: 'checked' },
-  {id: 'inprogres', value: FILTER_STATUSES.ACTIVE, label: 'Активные', isChecked: '' },
-  {id: 'compleated', value: FILTER_STATUSES.COMPLEATED, label: 'Завершенные', isChecked: '' },
-];
-
-const filter = FILTER_STATUSES.ALL;
-
-const filterTodo = (filter, todo) => {
-  if (filter === FILTER_STATUSES.ALL) {
-    return true;
-  }
-
-  if (filter === FILTER_STATUSES.COMPLEATED) {
-    return todo.isDone;
-  }
-
-  return !todo.isDone;
-}
-
-export const TodoItem = ({ props }) => {
-  return props.filter((user) => filterTodo(filter, user)).map(({ id, label, isDone }) => {
-    return (
-      <li className={css.todo} key={id.toString()}>
-        <input type="checkbox" checked={isDone} onChange={() => {}} />
-        <span className={css.label}>{label}</span>
-      </li>
-    );
-  });
+  ALL: "all",
+  COMPLEATED: "compleated",
+  ACTIVE: "active",
 };
 
+export class TodoItem extends React.Component {
+  filterTodo = (filter, todo) => {
+    if (filter === "ALL") {
+      return true;
+    }
+
+    if (filter === "COMPLEATED") {
+      return todo.isDone;
+    }
+
+    return !todo.isDone;
+  };
+
+  render() {
+    const { props, onDelete, onToggle, satusFilter } = this.props;
+    const filter = `${satusFilter}`;
+    return props
+      .filter((user) => this.filterTodo(filter, user))
+      .map(({ id, label, isDone }) => {
+        return (
+          <li className={css.todo} key={id.toString()}>
+            <input
+              type="checkbox"
+              checked={isDone}
+              onChange={() => onToggle(id)}
+            />
+            <span className={css.label}>{label}</span>
+            <button onClick={() => onDelete(id)}>Delete</button>
+          </li>
+        );
+      });
+  }
+}
