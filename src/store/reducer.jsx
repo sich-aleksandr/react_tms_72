@@ -21,6 +21,20 @@ const INITIAL_STATE_FILTER = {
   selectedFilter: FILTER_STATUSES.ALL,
 };
 
+const INITIAL_STATE_USER_AUTH = {
+  userAuth: true,
+};
+
+export const reducerAuth = ( state = INITIAL_STATE_USER_AUTH, action ) => {
+  switch (action.type) {
+    case TASKS_ACTIONS.USER_AUTH: {
+      return { userAuth: !state.userAuth }
+
+    }
+    default:
+      return state;
+  }
+}
 
 
 export const reducerTasks = (state = INITIAL_STATE_USERS, action) => {
@@ -30,6 +44,7 @@ export const reducerTasks = (state = INITIAL_STATE_USERS, action) => {
         tasks: state.tasks.filter(
           ({ id: taskID }) => taskID !== action.payload
         ),
+        maxId: state.maxId,
       };
     }
 
@@ -66,7 +81,7 @@ export const reducerTasks = (state = INITIAL_STATE_USERS, action) => {
 export const reducerFilter = (state = INITIAL_STATE_FILTER, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.CHANGE_FILTER: {
-      return { selectedFilter: action.payload.target.value };
+      return { selectedFilter: action.payload };
     }
 
     default:
@@ -78,4 +93,5 @@ export const reducerFilter = (state = INITIAL_STATE_FILTER, action) => {
 export const rootReducer = combineReducers({
     reducerTasks,
     reducerFilter,
+    reducerAuth,
 });
