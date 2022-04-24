@@ -3,10 +3,10 @@ import "./sort-todo.css";
 
 export default class SortTodos extends React.Component {
   render() {
-    const { props, onChange, value } = this.props;
+    const { props, onChange, value:groupVallue } = this.props;
     return (
       <div className="sort">
-        {props.map(({ id, label, isChecked }) => {
+        {props.map(({ id, value, label }) => {
           return (
             <div key={id} className="sort-radio">
               <input
@@ -14,7 +14,7 @@ export default class SortTodos extends React.Component {
                 type="radio"
                 id={id}
                 value={value}
-                checked={isChecked}
+                checked={value === groupVallue}
                 onChange={onChange}
               />
               <label htmlFor={id}>{label}</label>
