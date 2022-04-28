@@ -13,8 +13,11 @@ const filterTodo = (filter, todo) => {
   };
 
 export const getFilter = (state) => {
-    console.log(state.reducerFilter);
     return state.reducerFilter.selectedFilter;
+}  
+
+export const getAuth = (state) => {
+    return state.reducerAuth.userAuth;
 }  
 
 export const getTasks = (state) => {
