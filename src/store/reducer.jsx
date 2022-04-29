@@ -1,5 +1,42 @@
-import { TASKS_ACTIONS } from "./constants";
+import { TASKS_ACTIONS, WeatherActions } from "./constants";
 import { combineReducers } from "redux";
+import { LOAD_STATUSES } from "../Commponents/weather/constants";
+
+const INITIAL_STATE_WEATHER = {
+  data: {},
+  loadStatus: LOAD_STATUSES.LOADING
+};
+
+
+export const WeatherReducer = (state = INITIAL_STATE_WEATHER, action) => {
+  switch (action.type) {
+
+    case WeatherActions.fetchStart: {
+        return {
+          data: state.data,
+          loadStatus: LOAD_STATUSES.LOADING,
+        }
+      }
+      case WeatherActions.fetchError: {
+        return {
+          data: {},
+          loadStatus: LOAD_STATUSES.ERROR,
+        }
+      }
+      case WeatherActions.fetchSuccess: {
+        return {
+          data: action.payload,
+          loadStatus: LOAD_STATUSES.LOADED
+        };
+      }
+
+    default:
+      return state;
+  }
+};
+
+
+
 
 const FILTER_STATUSES = {
   ALL: "all",
@@ -94,4 +131,5 @@ export const rootReducer = combineReducers({
     reducerTasks,
     reducerFilter,
     reducerAuth,
+    WeatherReducer,
 });

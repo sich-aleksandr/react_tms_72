@@ -1,40 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { TasksActionCreators } from "../../../store";
 import "./add-todo.css";
 
-export default class AddTodo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: ''
-    }
-  }
+const AddTodo = () => {
+  const [text, setText] = useState("");
 
-  onValueChange = ({target}) => {
-    this.setState({text: target.value})
-  }
+  const dispatch = useDispatch();
+  const addTask = (body) => dispatch(TasksActionCreators.addTask(body));
 
-  onAdd = () => {
-    this.props.onAdd(this.state.text)
-    this.setState({
-      text: ''
-    })
-  }
+  const onValueChange = ({ target }) => {
+    setText(target.value);
+  };
 
-  render() {
-    return (
-      <div className="add-panel">
-        <form>
-          <input type="text" className="add-input" placeholder="What we need Todo?" 
-          onChange={this.onValueChange}
-          value={this.state.text}
-          />
-          <button type="button"
-          onClick={this.onAdd}>
-            Add
-          </button>
-        </form>
-      </div>
-    );
-  }
+  const onAdd = () => {
+    addTask(text);
+    setText("");
+  };
 
-}  
+  return (
+    <div className="add-panel">
+      <form>
+        <input
+          type="text"
+          className="add-input"
+          placeholder="What we need Todo?"
+          onChange={onValueChange}
+          value={text}
+        />
+        <button type="button" onClick={onAdd}>
+          Add
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default AddTodo;

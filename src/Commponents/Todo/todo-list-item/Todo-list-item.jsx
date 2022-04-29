@@ -1,39 +1,29 @@
 import React from "react";
 import css from "./todo-list-item.module.css";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TasksSelectors, TasksActionCreators } from "../../../store";
 import { Link } from "react-router-dom";
 
-export class TodoItemOriginal extends React.Component {
-  
-  render() {
-      return this.props.tasks.map(({ id, label, isDone }) => {
-      return (
-        <li className={css.todo} key={id.toString()}>
-          <input
-            type="checkbox"
-            checked={isDone}
-            onChange={() => this.props.toggleTask(id)}
-          />
-          <span className={css.label}>{label}</span>
-          <Link to={`/todo/${id}`}>More...</Link>
-          {isDone && <button onClick={() => this.props.deleteTask(id)}>Delete</button>}
-        </li>
-      );
-    });
-  }
-}
+export const TodoItem = () => {
+  const dispatch = useDispatch();
 
-const mapStateToProps = (state) => ({
-  tasks: TasksSelectors.getTasks(state),
-});
+  const tasks = useSelector(TasksSelectors.getTasks);
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteTask: (id) => dispatch(TasksActionCreators.deleteTask(id)),
-  toggleTask: (id) => dispatch(TasksActionCreators.toggleTask(id)),
-});
+  const deleteTask = (id) => dispatch(TasksActionCreators.deleteTask(id));
+  const toggleTask = (id) => dispatch(TasksActionCreators.toggleTask(id));
 
-export const TodoItem = connect(mapStateToProps, mapDispatchToProps)(TodoItemOriginal);
-
-
-
+  return tasks.map(({ id, label, isDone }) => {
+    return (
+      <li className={css.todo} key={id.toString()}>
+        <input
+          type="checkbox"
+          checked={isDone}
+          onChange={() => toggleTask(id)}
+        />
+        <span className={css.label}>{label}</span>
+        <Link to={`/todo/${id}`}>More...</Link>
+        {isDone && <button onClick={() => deleteTask(id)}>Delete</button>}
+      </li>
+    );
+  });
+};

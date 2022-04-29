@@ -1,9 +1,7 @@
 import React from "react";
 import "./sort-todo.css";
 
-export default class SortTodos extends React.Component {
-  render() {
-    const { props, onChange, value:groupVallue } = this.props;
+const SortTodos = ({ props, onChange, value:groupVallue }) => {
     return (
       <div className="sort">
         {props.map(({ id, value, label }) => {
@@ -23,5 +21,6 @@ export default class SortTodos extends React.Component {
         })}
       </div>
     );
-  }
 }
+
+export default SortTodos;
