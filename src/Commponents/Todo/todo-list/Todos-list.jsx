@@ -2,9 +2,7 @@ import React from "react";
 import "./todos-list.css";
 import { TodoItem } from "../todo-list-item/Todo-list-item.jsx";
 
-export default class AddTodo extends React.Component {
-  render() {
-    const { tasks, onDelete, onToggle } = this.props;
+const AddTodo = ({ tasks, onDelete, onToggle }) => {
     return (
       <ul className="todo-list">
         <TodoItem
@@ -14,5 +12,6 @@ export default class AddTodo extends React.Component {
         />
       </ul>
     );
-  }
 }
+
+export default AddTodo;
