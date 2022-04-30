@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { TasksActionCreators } from "../../../store";
+import { TasksAction } from "../../../store";
 import "./add-todo.css";
 
 const AddTodo = () => {
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();
-  const addTask = (body) => dispatch(TasksActionCreators.addTask(body));
+  const addTask = (body) => dispatch(TasksAction.addTask(body));
 
   const onValueChange = ({ target }) => {
     setText(target.value);

@@ -1,7 +1,7 @@
 import React from "react";
 import css from "./todo-list-item.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { TasksSelectors, TasksActionCreators } from "../../../store";
+import { TasksSelectors, TasksAction } from "../../../store";
 import { Link } from "react-router-dom";
 
 export const TodoItem = () => {
@@ -9,8 +9,8 @@ export const TodoItem = () => {
 
   const tasks = useSelector(TasksSelectors.getTasks);
 
-  const deleteTask = (id) => dispatch(TasksActionCreators.deleteTask(id));
-  const toggleTask = (id) => dispatch(TasksActionCreators.toggleTask(id));
+  const deleteTask = (id) => dispatch(TasksAction.deleteTask(id));
+  const toggleTask = (id) => dispatch(TasksAction.toggleTask(id));
 
   return tasks.map(({ id, label, isDone }) => {
     return (
